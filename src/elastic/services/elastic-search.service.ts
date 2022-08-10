@@ -75,8 +75,20 @@ export class ElasticSearchService {
     async deleteByAge(age:number)
     {
         const deleteUsersWithIds=await this.elasticSearchService.deleteByQuery({index:"posts",query:{
-                match:{
-                    age:age
+                bool:{
+                    must:[
+                        {
+                        match:{
+                            age
+                        }
+                    },
+                        {
+                            match:{
+                                _id:"PgG2cYIBdmYUT3ZzwrlN"
+                            }
+                        }
+                    ]
+
                 }
             }})
 
