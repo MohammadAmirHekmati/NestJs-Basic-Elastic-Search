@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {Body, Controller, Get, Param, ParseIntPipe, Post} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AppService } from '../service/app.service';
 import { EsCreateUser } from '../dto/es-create-user.dto';
+import {MaxNumber} from "../decorators/max.validate.decorator";
 
 @ApiTags("Elastic Search")
 @Controller("es")
@@ -43,4 +44,9 @@ export class AppController {
     return this.appService.insertFakeData()
   }
 
+    @Get("get/all/:max")
+    async getAllData(@MaxNumber("max") max:number)
+    {
+        return this.appService.getAllData(max)
+    }
 }
