@@ -50,11 +50,23 @@ export class ElasticSearchService {
         return search.hits.hits
     }
 
+    //Query With Two Field
     async findByAge(age:number)
     {
         const findMatch=await this.elasticSearchService.search({index:"posts",query:{
-                match:{
-                    age:age
+                bool:{
+                    must:[
+                        {
+                            match:{
+                                age
+                            },
+
+                        },
+                        {
+                            match:{
+                                _id:"PgG2cYIBdmYUT3ZzwrlN"
+                        }}
+                    ]
                 }
             }})
         return findMatch.hits.hits

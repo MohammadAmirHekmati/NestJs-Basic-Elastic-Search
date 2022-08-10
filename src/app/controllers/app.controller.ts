@@ -45,7 +45,7 @@ export class AppController {
   }
 
     @Get("get/all/:max")
-    async getAllData(@MaxNumber("max") max:number)
+    async getAllData(@Param("max") max:number)
     {
         return this.appService.getAllData(max)
     }
