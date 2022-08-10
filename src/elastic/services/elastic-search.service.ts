@@ -1,5 +1,5 @@
 import {ConflictException, Inject, Injectable, NotFoundException} from "@nestjs/common";
-import {elasticConstant} from "./elastic-connection.service";
+import {elasticConstant} from "../elastic-constant";
 import {Client} from "@elastic/elasticsearch";
 import {EsCreateUser} from "../../app/dto/es-create-user.dto";
 

@@ -1,15 +1,31 @@
 import {DynamicModule, Module} from '@nestjs/common';
-import {ElasticConnectionService} from "./services/elastic-connection.service";
+import { elasticConstant} from "./elastic-constant";
 import {ElasticSearchService} from "./services/elastic-search.service";
+import {Client, ClientOptions} from "@elastic/elasticsearch";
 
 @Module({})
 export class ElasticModule {
-    static register():DynamicModule{
+    static register(clientOptions:ClientOptions):DynamicModule{
         return {
             module:ElasticModule,
-            providers:[ElasticConnectionService,ElasticSearchService],
+            providers:[{
+                provide:elasticConstant,
+                useFactory:()=>{
+                    const client=new Client(clientOptions)
+                    return client
+                }
+            }
+
+                ,
+                ElasticSearchService],
             global:true,
-            exports:[ElasticSearchService,ElasticConnectionService]
+            exports:[ElasticSearchService,{
+                provide:elasticConstant,
+                useFactory:()=>{
+                    const client=new Client(clientOptions)
+                    return client
+                }
+            }]
         }
     }
 }
